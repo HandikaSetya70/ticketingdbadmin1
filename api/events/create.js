@@ -61,7 +61,7 @@ export default async function handler(req, res) {
     }
 
     // Get the request data
-    const { event_name, event_date, venue } = req.body
+    const { event_name, event_date, venue, event_description, event_image_url, category } = req.body
 
     // Validate required fields
     if (!event_name || !event_date || !venue) {
@@ -89,16 +89,19 @@ export default async function handler(req, res) {
 
     // Create the event
     const { data: newEvent, error: createError } = await supabase
-      .from('events')
-      .insert([
-        {
-          event_name,
-          event_date,
-          venue
-        }
-      ])
-      .select()
-      .single()
+    .from('events')
+    .insert([
+      {
+        event_name,
+        event_date,
+        venue,
+        event_description,
+        event_image_url,
+        category
+      }
+    ])
+    .select()
+    .single()
 
     if (createError) {
       throw createError

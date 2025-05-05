@@ -61,7 +61,7 @@ export default async function handler(req, res) {
     }
 
     // Get the request data
-    const { event_id, event_name, event_date, venue } = req.body
+    const { event_id, event_name, event_date, venue, event_description, event_image_url, category } = req.body
 
     // Validate required fields
     if (!event_id) {
@@ -100,6 +100,9 @@ export default async function handler(req, res) {
       updateData.event_date = event_date
     }
     if (venue) updateData.venue = venue
+    if (event_description !== undefined) updateData.event_description = event_description
+    if (event_image_url !== undefined) updateData.event_image_url = event_image_url
+    if (category !== undefined) updateData.category = category
 
     // Update the event
     const { data: updatedEvent, error: updateError } = await supabase
